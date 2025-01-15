@@ -5,7 +5,7 @@ Minimart System Designed for a Hackathon 'Hack For Good 2025'
 
 
 ## Process
-  1) Download Zip File
+  1) Click 'code' button on top right and click 'Download Zip File'
   2) Extract Zip File
   3) Navigate to Folder that was Extracted.
   4) Open up command terminal(cmd in windows search)
