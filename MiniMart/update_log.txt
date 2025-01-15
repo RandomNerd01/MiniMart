@@ -1,0 +1,7 @@
+[11/01/2025, 9:03:04 pm] Admin updated Product 1 to stock 50
+[12/01/2025, 10:28:27 am] Admin updated 1 to stock 5
+[12/01/2025, 10:28:47 am] Admin updated 2 to stock 5
+[12/01/2025, 10:33:35 am] Admin updated Product-3 to stock 2
+[12/01/2025, 10:33:38 am] Admin updated Product-3 to stock 2
+[12/01/2025, 10:33:40 am] Admin updated Product-3 to stock 3
+[12/01/2025, 10:33:42 am] Admin updated Product-2 to stock 5
