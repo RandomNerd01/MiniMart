@@ -1,0 +1,1953 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muhammadiyah Welfare Home’s MiniMart</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <meta name="google-signin-client_id" content="1052387186995-qtg771d8sp76t3g9j8052vlij1rvdv7d.apps.googleusercontent.com">
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 20px;
+          background-color: #f0f2f5; /* Light background */
+          position: relative; /* To position the logo properly */
+      }
+ .header {
+           display: flex;
+           justify-content: center; /* Center the header content */
+           align-items: center;
+           width: 100%;
+           margin-top: 20px;
+           position: relative; /* To position logo within the header */
+       }
+
+
+      h1 {
+           color: #ffa41c;
+           font-size: 35px;
+           margin: 0;
+           line-height: 1.2;
+           text-align: center; /* Ensure title is centered */
+       }
+       #title-image {
+           border: 5px solid black;
+           border-radius: 10px;
+           width: 300px;
+           height: auto;
+           position: absolute; /* Absolute positioning for logo */
+           right: 100px; /* Place the logo 15px from the right edge */
+       }
+
+
+      .section {
+          margin: 20px auto;
+          padding: 20px;
+          border: none; /* Remove borders from sections */
+          border-radius: 10px;
+          max-width: 400px;
+          background-color: #ffffff; /* White background */
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+      }
+      .hidden {
+          display: none;
+      }
+      #cart {
+          margin-top: 20px;
+      }
+      .product {
+          margin-bottom: 20px;
+      }
+      .preorder {
+          margin-top: 10px;
+          color: blue;
+          cursor: pointer;
+      }
+      button {
+          background-color: #ffa41c; /* Amazon-like button color */
+          color: white;
+          border: none;
+          padding: 10px;
+          margin-top: 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+          transition: background-color 0.3s;
+          width: 100%;
+      }
+      button:hover {
+          background-color: #ff8c00; /* Darker shade on hover */
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+      }
+      #user-dashboard {
+          max-width: 600px; /* Wider dashboard for users */
+          margin: 20px auto; /* Centering */
+      }
+      #products {
+          border-top: 2px solid #ffa41c; /* Dividing color for products */
+          padding-top: 10px;
+          margin-top: 10px;
+      }
+      .transaction-history {
+          border-top: 2px solid #ccc; /* Divider for transaction history */
+          padding-top: 10px;
+          margin-top: 10px;
+      }
+      /* Styling for the logo */
+      #logo {
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          width: 150px; /* Increase logo size */
+          height: auto; /* Maintain aspect ratio */
+      }
+  </style>
+</head>
+<body>
+
+
+<div class="header">
+       <h1>Welcome to the Minimart System</h1>
+       <img id="title-image" src="lol.png" alt="Logo">
+   </div>
+
+
+
+
+
+<!-- Admin Section -->
+<div id="admin-section" class="section">
+  <h2>Admin Login</h2>
+  <input type="password" id="admin-password" placeholder="Enter Admin Password">
+  <button onclick="adminLogin()">Login</button>
+</div>
+
+
+<div id="admin-dashboard" class="section hidden">
+  <h2>Admin Dashboard</h2>
+  <button id="manage-users-button" onclick="fetchUsers()">Manage Users</button>
+  <div id="user-list" class="hidden">
+      <h3>Users</h3>
+      <ul id="users-container"></ul>
+  </div>
+
+
+  <button id="view-requests-button" onclick="fetchRequests()">View User Requests</button>
+  <div id="user-requests" class="hidden">
+      <h3>User Requests</h3>
+      <ul id="requests-container"></ul>
+  </div>
+   <h3>Edit a Product</h3>
+   <div id="edit-product-form">
+       <select id="edit-product-name">
+           <option value="" disabled selected>Select a Product</option>
+       </select>
+       <input type="number" id="edit-product-price" placeholder="New Price" />
+       <input type="number" id="edit-product-stock" placeholder="New Stock" />
+       <button onclick="editProduct()">Edit Product</button>
+   </div>
+
+
+   <h3>Remove a Product</h3>
+   <div id="remove-product-form">
+       <select id="remove-product-name">
+           <option value="" disabled selected>Select a Product</option>
+       </select>
+       <button onclick="removeProduct()">Remove Product</button>
+
+
+   </div>
+
+
+  <h3>Add a New Product</h3>
+  <div id="add-product-form">
+      <input type="text" id="product-name" placeholder="Product Name" />
+      <input type="number" id="product-price" placeholder="Price" />
+      <input type="number" id="product-stock" placeholder="Stock" />
+      <button onclick="addProduct()">Add Product</button>
+  </div>
+  <button onclick="logout()">Logout</button>
+</div>
+
+
+<div id="user-section" class="section">
+  <h2>User Login</h2>
+  <input type="email" id="username" placeholder="Enter your email" required />
+  <input type="password" id="password" placeholder="Enter your password" required />
+  <button onclick="signIn()">Sign In</button>
+
+
+  <h3>Don't have an account?</h3>
+  <input type="email" id="signup-username" placeholder="Enter your email" required />
+  <input type="password" id="signup-password" placeholder="Enter your password" required />
+  <button onclick="signUp()">Sign Up</button>
+   <div id="reset-password-section">
+       <h3>Reset Password via Mobile</h3>
+       <!-- New email input for password reset -->
+       <input type="email" id="reset-email" placeholder="Enter your email" required />
+
+
+       <!-- Button to trigger the reset password process -->
+       <button onclick="showResetPasswordViaMobile()">Reset Password via Mobile</button>
+
+
+       <div id="verification-code-container">
+           <input type="text" id="verification-code" placeholder="Enter verification code" />
+           <button onclick="verifyCode()">Verify Code</button>
+       </div>
+
+
+
+
+
+
+       <div id="new-password-container" class="hidden">
+           <input type="password" id="new-password" placeholder="Enter new password" />
+           <button onclick="resetPassword()">Reset Password</button>
+       </div>
+   </div>
+
+
+</div>
+
+
+<!-- User Dashboard -->
+<div id="user-dashboard" class="section hidden">
+  <h2 id="user-welcome"></h2>
+  <p>Your Voucher Balance: <span id="user-coins">100$</span></p>
+  <div id="cart">
+      <h3>Your Cart</h3>
+      <ul id="cart-items"></ul>
+      <button onclick="clearCart()">Clear Cart</button> <!-- Clear Cart Button -->
+  </div>
+  <h3>Products</h3>
+  <div id="products">
+      <!-- Product List -->
+  </div>
+  <button onclick="submitOrder()">Submit Order</button>
+  <button onclick="logout()">Logout</button>
+  <h3>Transaction History</h3>
+  <div class="transaction-history">
+      <ul id="transaction-history"></ul>
+  </div>
+   <div id="mobile-verification">
+       <button onclick="showMobileInput()">Verify Email</button>
+       <div id="mobile-input-container" class="hidden">
+           <input type="tel" id="mobile-number" placeholder="Enter your email" />
+           <button onclick="saveMobileNumber()">Save</button>
+       </div>
+   </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+
+
+   document.addEventListener('DOMContentLoaded', () => {
+   populateProductDropdowns();
+});
+
+
+async function populateProductDropdowns() {
+   try {
+       const response = await fetch('http://localhost:3000/admin/products');
+       if (!response.ok) {
+           throw new Error('Failed to fetch products');
+       }
+
+
+       const products = await response.json();
+
+
+       const editDropdown = document.getElementById('edit-product-name');
+       const removeDropdown = document.getElementById('remove-product-name');
+
+
+       // Clear existing options
+       editDropdown.innerHTML = '<option value="" disabled selected>Select a Product</option>';
+       removeDropdown.innerHTML = '<option value="" disabled selected>Select a Product</option>';
+
+
+       // Populate dropdowns with products
+       products.forEach(product => {
+           const option = document.createElement('option');
+           option.value = product.name;
+           option.textContent = product.name;
+
+
+           // Add to both dropdowns
+           editDropdown.appendChild(option.cloneNode(true));
+           removeDropdown.appendChild(option);
+       });
+   } catch (error) {
+       console.error('Error populating product dropdowns:', error);
+       alert('Failed to fetch products. Please try again.');
+   }
+}
+
+
+
+
+async function removeProduct() {
+   console.log("RAN!");
+   const name = document.getElementById('remove-product-name').value;
+
+
+   // Log the dropdown value
+   console.log('Dropdown selected value:', name);
+
+
+   if (!name) {
+       alert('Please select a product to remove.');
+       return;
+   }
+
+
+   console.log('Attempting to remove product:', name); // Log the selected product name
+
+
+   try {
+       const response = await fetch('http://localhost:3000/admin/products/remove', {
+           method: 'POST', // Use POST
+           headers: {
+               'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({ name }) // Send the product name in the body
+       });
+
+
+       if (!response.ok) {
+           const errorData = await response.json();
+           console.error('Failed to remove product:', errorData);
+           throw new Error(errorData.error || 'Failed to remove product');
+       }
+
+
+       const result = await response.json();
+       alert(`Product "${name}" removed successfully!`);
+       console.log('Removed product:', result.removedProduct);
+
+
+       populateProductDropdowns(); // Refresh the dropdowns
+   } catch (error) {
+       console.error('Error removing product:', error);
+       alert(error.message);
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+async function editProduct() {
+   const name = document.getElementById('edit-product-name').value;
+   const price = parseFloat(document.getElementById('edit-product-price').value);
+   const stock = parseInt(document.getElementById('edit-product-stock').value);
+
+
+   if (!name || isNaN(price) || isNaN(stock)) {
+       alert('Please provide valid inputs for all fields.');
+       return;
+   }
+
+
+   try {
+       const response = await fetch('http://localhost:3000/admin/products/edit', {
+           method: 'PUT',
+           headers: {
+               'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({ name, price, stock })
+       });
+
+
+       if (!response.ok) {
+           throw new Error('Failed to edit product');
+       }
+
+
+       const result = await response.json();
+       alert(`Product "${name}" updated successfully!`);
+       console.log('Edited product:', result.product);
+
+
+       // Refresh product dropdowns
+       populateProductDropdowns();
+   } catch (error) {
+       console.error('Error editing product:', error);
+       alert('Failed to edit product. Please try again.');
+   }
+}
+
+
+
+
+function showResetPasswordViaMobile() {
+   const email = document.getElementById('reset-email').value;
+
+
+   fetch('/send-verification-code', {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({ email })
+   })
+   .then(response => response.json())
+   .then(data => {
+       if (data.success) {
+           const container = document.getElementById('reset-password-section');
+
+
+           // Check if verification code container already exists
+           let verificationCodeContainer = document.getElementById('verification-code-container');
+           if (!verificationCodeContainer) {
+               // Create and append the verification code container if it doesn't exist
+               verificationCodeContainer = document.createElement('div');
+               verificationCodeContainer.id = 'verification-code-container';
+
+
+               const input = document.createElement('input');
+               input.type = 'text';
+               input.id = 'verification-code';
+               input.placeholder = 'Enter verification code';
+
+
+               const button = document.createElement('button');
+               button.innerText = 'Verify Code';
+               button.onclick = verifyCode;
+
+
+               verificationCodeContainer.appendChild(input);
+               verificationCodeContainer.appendChild(button);
+               container.appendChild(verificationCodeContainer);
+           } else {
+               // Optionally, you can reset the existing input field if desired
+               document.getElementById('verification-code').value = '';
+           }
+       } else {
+           alert(data.message);
+       }
+   })
+   .catch(error => console.error('Error:', error));
+}
+
+
+
+
+
+
+function showMobileInput() {
+   document.getElementById('mobile-input-container').classList.remove('hidden');
+}
+
+
+
+
+function verifyCode() {
+   const email = document.getElementById('reset-email').value; // Use reset-email input
+   const verificationCode = document.getElementById('verification-code').value;
+   fetch('/verify-code', {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({ email, verificationCode }) // Use email here too
+   })
+   .then(response => response.json())
+   .then(data => {
+       if (data.success) {
+           document.getElementById('new-password-container').classList.remove('hidden');
+       } else {
+           alert(data.message);
+       }
+   })
+   .catch(error => console.error('Error:', error));
+}
+
+
+
+
+function resetPassword() {
+   const email = document.getElementById('reset-email').value; // Use reset-email instead of username
+   const newPassword = document.getElementById('new-password').value;
+
+
+   fetch('/reset-password', {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({ email, newPassword }) // Send email and newPassword
+   })
+   .then(response => response.json())
+   .then(data => {
+       alert(data.message);
+   })
+   .catch(error => console.error('Error:', error));
+}
+
+
+
+
+           function saveMobileNumber() {
+               const mobileNumber = document.getElementById('mobile-number').value;
+               const username = document.getElementById('username').value; // assuming the username is the user's email
+               fetch('/save-mobile-number', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({ username, mobileNumber })
+               })
+               .then(response => response.json())
+               .then(data => {
+                   alert(data.message);
+                   document.getElementById('mobile-input-container').classList.add('hidden');
+               })
+               .catch(error => console.error('Error:', error));
+           }
+
+
+              async function signUp() {
+              const email = document.getElementById('signup-username').value.trim();
+              const password = document.getElementById('signup-password').value;
+
+
+
+
+              if (!email || !password) {
+                  alert('Please enter both email and password.');
+                  return;
+              }
+
+
+
+
+              try {
+                  // Send sign-up request to the backend
+                  const response = await fetch('http://localhost:3000/sign-up', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ email, password })
+                  });
+
+
+
+
+                  if (!response.ok) {
+                      const errorData = await response.json();
+                      throw new Error(errorData.error || 'Failed to sign up.');
+                  }
+
+
+
+
+                  const result = await response.json();
+                  alert('Sign up successful! You can now log in.');
+                  console.log(`User signed up: ${result.email}`);
+
+
+
+
+                  // Optionally, clear the sign-up fields
+                  document.getElementById('signup-username').value = '';
+                  document.getElementById('signup-password').value = '';
+              } catch (error) {
+                  console.error('Error during sign-up:', error);
+                  alert(error.message);
+              }
+           }
+
+
+
+
+              async function processRequest(userEmail, action) {
+                      try {
+                      // First, process the request (approve or reject)
+                      const response = await fetch('http://localhost:3000/admin/orders/process', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ userEmail, action })
+                      });
+
+
+
+
+
+
+
+
+                      if (!response.ok) {
+                          throw new Error('Failed to process request');
+                      }
+
+
+
+
+
+
+
+
+                      const result = await response.json();
+                      alert(`Request for ${userEmail} has been ${result.status}.`);
+
+
+
+
+
+
+
+
+                      // Now remove the request from the backend and frontend
+                      const removeResponse = await fetch('http://localhost:3000/admin/orders/remove', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ userEmail })
+                      });
+
+
+
+
+
+
+
+
+                      if (!removeResponse.ok) {
+                          throw new Error('Failed to remove request from the backend');
+                      }
+
+
+
+
+
+
+
+
+                      // Remove the corresponding HTML element
+                      const requestElement = document.querySelector(`#request-${userEmail.replace(/[@.]/g, '-')}`);
+                      if (requestElement) {
+                          requestElement.remove();
+                      }
+                  } catch (error) {
+                      console.error('Error processing or removing request:', error);
+                      alert('Failed to process or remove the request. Please try again.');
+                  }
+              }
+
+
+
+
+
+
+
+
+
+
+
+
+           async function fetchRequests() {
+              try {
+                  const response = await fetch('http://localhost:3000/admin/orders');
+                  if (!response.ok) {
+                      throw new Error('Failed to fetch user requests');
+                  }
+
+
+
+
+
+
+
+
+                  const requests = await response.json();
+                  const requestsContainer = document.getElementById('requests-container');
+                  const userRequestsSection = document.getElementById('user-requests');
+
+
+
+
+
+
+
+
+                  // Clear the container and make it visible
+                  requestsContainer.innerHTML = '';
+                  userRequestsSection.classList.remove('hidden');
+
+
+
+
+
+
+
+
+                  // Render each request
+                  requests.forEach(request => {
+                      const sanitizedEmail = request.userEmail.replace(/[@.]/g, '-'); // Replace invalid characters
+                      const requestItem = document.createElement('li');
+                      requestItem.id = `request-${sanitizedEmail}`; // Assign a unique id
+                      requestItem.innerHTML = `
+                          <strong>User:</strong> ${request.userEmail}<br>
+                          <strong>Cart:</strong> ${request.cart.map(item => `${item.quantity}x ${item.product.name}`).join(', ')}<br>
+                          <strong>Total Cost:</strong> ${request.totalCost} coins<br>
+                          <strong>Status:</strong> ${request.status}<br>
+                          <button onclick="processRequest('${request.userEmail}', 'approved')">Approve</button>
+                          <button onclick="processRequest('${request.userEmail}', 'rejected')">Reject</button>
+                      `;
+                      requestsContainer.appendChild(requestItem);
+                  });
+              } catch (error) {
+                  console.error('Error fetching user requests:', error);
+                  alert('Failed to fetch user requests. Please try again.');
+              }
+           }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      window.onload = function() {
+                                      fetchProducts();
+                                  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      async function addProduct() {
+                                          const name = document.getElementById('product-name').value.trim();
+                                          const price = parseFloat(document.getElementById('product-price').value);
+                                          const stock = parseInt(document.getElementById('product-stock').value);
+
+
+
+
+
+
+
+
+                                          if (!name || isNaN(price) || isNaN(stock)) {
+                                              alert('Please provide valid inputs for all fields.');
+                                              return;
+                                          }
+
+
+
+
+
+
+
+
+                                          try {
+                                              const response = await fetch('http://localhost:3000/admin/products', {
+                                                  method: 'POST',
+                                                  headers: { 'Content-Type': 'application/json' },
+                                                  body: JSON.stringify({ name, price, stock })
+                                              });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                              const result = await response.json();
+                                              const product = result.product;
+                                              const sanitizedProductName = product.name.replace(/[^a-zA-Z0-9]/g, '-');
+
+
+
+
+
+
+
+
+                                              alert(`Product "${product.name}" added successfully!`);
+
+
+
+
+
+
+
+
+                                              const productList = document.getElementById('product-list');
+
+
+
+
+
+
+
+
+                                              const productItem = document.createElement('div');
+                                              productItem.classList.add('product');
+                                              productItem.innerHTML = `
+                                                  <p>Name: ${product.name}</p>
+                                                  <p>Price: $${product.price}</p>
+                                                  <p>Current Stock: <span id="current-stock-${sanitizedProductName}">${product.stock}</span></p>
+                                                  <p>Update Stock: <input type="number" id="new-stock-${sanitizedProductName}" value="${product.stock}" min="0"></p>
+                                                  <button onclick="updateStock('${sanitizedProductName}', '${product.name}')">Update Stock</button>
+                                                  <button onclick="removeProduct('${sanitizedProductName}', '${product.name}')">Remove</button>
+                                              `;
+
+
+
+
+
+
+
+
+                                              productList.appendChild(productItem);
+
+
+
+
+
+
+
+
+                                              // Clear the input fields
+                                              document.getElementById('product-name').value = '';
+                                              document.getElementById('product-price').value = '';
+                                              document.getElementById('product-stock').value = '';
+                                          } catch (error) {
+                                              console.error('Error adding product:', error);
+                                              
+                                          }
+                                      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          async function unsuspendUser(email) {
+                                                          try {
+                                                              const response = await fetch('http://localhost:3000/admin/users/unsuspend', {
+                                                                  method: 'POST',
+                                                                  headers: { 'Content-Type': 'application/json' },
+                                                                  body: JSON.stringify({ email })
+                                                              });
+
+
+
+
+
+
+
+
+                                                              if (!response.ok) {
+                                                                  throw new Error('Failed to unsuspend user');
+                                                              }
+
+
+
+
+
+
+
+
+                                                              alert(`User ${email} has been unsuspended.`);
+                                                              fetchUsers(); // Refresh the user list
+                                                          } catch (error) {
+                                                              console.error('Error unsuspending user:', error);
+                                                              alert('Failed to unsuspend user. Please try again.');
+                                                          }
+                                                      }
+
+
+
+
+
+
+
+
+                                                          async function suspendUser(email) {
+                                                              try {
+                                                                  const response = await fetch('http://localhost:3000/admin/users/suspend', {
+                                                                      method: 'POST',
+                                                                      headers: { 'Content-Type': 'application/json' },
+                                                                      body: JSON.stringify({ email })
+                                                                  });
+
+
+
+
+
+
+
+
+                                                                  if (!response.ok) {
+                                                                      throw new Error('Failed to suspend user');
+                                                                  }
+
+
+
+
+
+
+
+
+                                                                  alert(`User ${email} has been suspended.`);
+                                                                  fetchUsers(); // Refresh the user list
+                                                              } catch (error) {
+                                                                  console.error('Error suspending user:', error);
+                                                                  alert('Failed to suspend user. Please try again.');
+                                                              }
+                                                          }
+
+
+
+
+
+
+
+
+                                                           async function fetchUsers() {
+                                                              try {
+                                                                  console.log('Fetching users from /admin/users...');
+                                                                  const response = await fetch('http://localhost:3000/admin/users');
+                                                                  if (!response.ok) {
+                                                                      throw new Error('Failed to fetch users');
+                                                                  }
+
+
+
+
+
+
+
+
+                                                                  const data = await response.json();
+                                                                  console.log('Fetched users:', data); // Debug log
+
+
+
+
+
+
+
+
+                                                                  const usersContainer = document.getElementById('users-container');
+                                                                  const userList = document.getElementById('user-list');
+
+
+
+
+
+
+
+
+                                                                  usersContainer.innerHTML = ''; // Clear existing content
+                                                                  userList.classList.remove('hidden'); // Show the list
+
+
+
+
+
+
+
+
+                                                                  // Render each user
+                                                                  data.users.forEach(user => {
+                                                                      const userItem = document.createElement('li');
+                                                                      userItem.innerHTML = `
+                                                                          ${user.email} - Status: ${user.verified ? 'Active' : 'Suspended'}
+                                                                          <button onclick="suspendUser('${user.email}')" ${!user.verified ? 'disabled' : ''}>Suspend</button>
+                                                                          <button onclick="unsuspendUser('${user.email}')" ${user.verified ? 'disabled' : ''}>Unsuspend</button>
+                                                                      `;
+                                                                      usersContainer.appendChild(userItem);
+                                                                  });
+
+
+
+
+
+
+
+
+                                                                  console.log('Rendered users successfully.');
+                                                              } catch (error) {
+                                                                  console.error('Error fetching users:', error);
+                                                                  alert('Failed to fetch users. Please try again.');
+                                                              }
+                                                          }
+
+
+
+
+
+
+
+
+                                                               // Function to fetch products from the backend
+                                                               async function fetchProducts() {
+                                                                  try {
+                                                                      const response = await fetch('/api/products');
+                                                                      const products = await response.json();
+                                                                      displayProducts(products);
+                                                                  } catch (error) {
+                                                                      console.error('Error fetching products:', error);
+                                                                  }
+                                                              }
+
+
+
+
+
+
+
+
+                                      function displayProducts(products) {
+                                          const productList = document.getElementById('product-list');
+                                          productList.innerHTML = ''; // Clear existing content
+
+
+
+
+
+
+
+
+                                          products.forEach(product => {
+                                              const sanitizedProductName = product.name.replace(/[^a-zA-Z0-9]/g, '-');
+                                              const productItem = document.createElement('div');
+                                              productItem.classList.add('product');
+                                              productItem.innerHTML = `
+                                                  <p>Name: ${product.name}</p>
+                                                  <p>Price: $${product.price}</p>
+                                                  <p>Current Stock: <span id="current-stock-${sanitizedProductName}">${product.stock}</span></p>
+                                                  <p>Update Stock: <input type="number" id="new-stock-${sanitizedProductName}" value="${product.stock}" min="0"></p>
+                                                  <button onclick="updateStock('${sanitizedProductName}', '${product.name}')">Update Stock</button>
+                                                  <button onclick="removeProduct('${sanitizedProductName}', '${product.name}')">Remove</button>
+                                              `;
+                                              productList.appendChild(productItem);
+                                          });
+                                      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      async function updateStock(sanitizedProductName, originalProductName) {
+                                          const newStock = document.getElementById(`new-stock-${sanitizedProductName}`).value;
+
+
+
+
+
+
+
+
+                                          if (isNaN(newStock) || newStock < 0) {
+                                              alert("Please enter a valid stock number.");
+                                              return;
+                                          }
+
+
+
+
+
+
+
+
+                                          try {
+                                              const response = await fetch(`/api/products/${originalProductName}`, {
+                                                  method: 'PUT',
+                                                  headers: {
+                                                      'Content-Type': 'application/json'
+                                                  },
+                                                  body: JSON.stringify({ stock: parseInt(newStock) })
+                                              });
+
+
+
+
+
+
+
+
+                                              const data = await response.json();
+                                              if (response.ok) {
+                                                  document.getElementById(`current-stock-${sanitizedProductName}`).textContent = newStock;
+                                                  alert(data.message);
+                                              } else {
+                                                  alert(data.message);
+                                              }
+                                          } catch (error) {
+                                              console.error('Error updating stock:', error);
+                                          }
+                                      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          // Logout function to hide the dashboard
+                                                          function logout() {
+                                                              document.getElementById('admin-dashboard').classList.add('hidden');
+                                                              // Additional logout actions if needed (e.g., clear session)
+                                                          }
+
+
+
+
+
+
+
+
+                                                              const adminPassword = "123";
+                                                              let userEmail = "";
+                                                              let products = [];
+                                                              let cart = [];
+                                                              let transactionHistory = [];
+
+
+
+
+
+
+
+
+                                                          async function loadProducts() {
+                                                              try {
+                                                                  // Fetch products data from the backend
+                                                                  const response = await fetch('/api/products');
+                                                                  if (!response.ok) {
+                                                                      throw new Error(`Failed to fetch products: ${response.statusText}`);
+                                                                  }
+
+
+
+
+
+
+
+
+                                                                  // Parse the JSON response
+                                                                  products = await response.json();
+                                                              console.log("Products loaded:", products);  // Verify the products are loaded
+                                                                  // Log the products to verify the response
+                                                                  console.log(products);
+
+
+
+
+
+
+
+
+                                                                  // Ensure the products is an array before trying to process it
+                                                                  if (Array.isArray(products)) {
+                                                                      const productsContainer = document.getElementById("products");
+                                                                      productsContainer.innerHTML = '';  // Clear the container before adding new products
+
+
+
+
+
+
+
+
+                                                                      // Loop through products and render them
+                                                                      products.forEach((product, index) => {
+                                                                          productsContainer.innerHTML += `
+                                                                              <div class="product">
+                                                                                  <h3>${product.name}</h3>
+                                                                                  <p>Price: ${product.price}$</p>
+                                                                                  <p id="stock-${index}">Stock: ${product.stock}</p>
+                                                                                  <input type="number" id="quantity-${index}" min="1" max="${product.stock}" value="1">
+                                                                                  <button onclick="addToCart(${index})">Add to Cart</button>
+                                                                                  <div id="preorder-${index}" class="preorder hidden" onclick="preorderProduct(${index})">Preorder</div>
+                                                                              </div>
+                                                                          `;
+                                                                      });
+                                                                  } else {
+                                                                      console.error('The response is not an array:', products);
+                                                                      alert('Failed to load products. Please try again later.');
+                                                                  }
+                                                              } catch (error) {
+                                                                  console.error('Error loading products:', error);
+                                                                  alert('Failed to load products. Please try again later.');
+                                                              }
+                                                          }
+                                                          document.addEventListener('DOMContentLoaded', loadProducts);
+
+                                                              // Admin login function
+function adminLogin() {
+    const enteredPassword = document.getElementById("admin-password").value;
+    if (enteredPassword === adminPassword) {
+        alert("Admin login successful!");
+        // Show admin dashboard and hide user sections
+        document.getElementById("admin-section").classList.add("hidden");
+        document.getElementById("admin-dashboard").classList.remove("hidden");
+        document.getElementById("user-section").classList.add("hidden");
+        document.getElementById("user-dashboard").classList.add("hidden");
+    } else {
+        alert("Incorrect password. Please try again.");
+    }
+}
+
+
+
+
+
+
+
+
+           async function signIn() {
+              const email = document.getElementById('username').value.trim();
+              const password = document.getElementById('password').value;
+
+
+
+
+              if (!email || !password) {
+                  alert('Please enter both email and password.');
+                  return;
+              }
+
+
+
+
+              try {
+                  // Send login request to the backend
+                  const response = await fetch('http://localhost:3000/sign-in', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ email, password })
+                  });
+
+
+
+
+                  if (!response.ok) {
+                      const errorData = await response.json();
+                      throw new Error(errorData.error || 'Failed to sign in.');
+                  }
+
+
+
+
+                  const userData = await response.json();
+
+
+
+
+                  // Extract user data from the backend response
+                  userEmail = userData.email;
+                  userCoins = userData.coins || 100;
+                  transactionHistory = userData.transactionHistory || [];
+                  cart = userData.cart || [];
+
+
+
+
+                  // Show the user dashboard
+                   document.getElementById("admin-section").classList.add("hidden");
+    document.getElementById("admin-dashboard").classList.add("hidden");
+    document.getElementById("user-section").classList.add("hidden");
+    document.getElementById("user-dashboard").classList.remove("hidden");
+                  updateDashboard();
+              } catch (error) {
+                  console.error('Error during sign-in:', error);
+                  alert(error.message);
+              }
+           }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          function clearCart() {
+                                                              // Clear the cart array
+                                                              cart = [];
+
+
+
+
+
+
+
+
+                                                              // Update the cart list display
+                                                              const cartList = document.getElementById("cart-items");
+                                                              cartList.innerHTML = '';
+
+
+
+
+
+
+
+
+                                                              // Optionally, you can alert the user that the cart has been cleared
+                                                              alert("Cart has been cleared.");
+
+
+
+
+
+
+
+
+                                                              // Log the cart to verify it's empty
+                                                              console.log('Cart cleared:', cart);
+                                                          }
+
+
+
+
+
+
+
+
+async function addToCart(productIndex) {
+    const product = products[productIndex];
+    const quantityInput = document.getElementById(`quantity-${productIndex}`);
+    const quantity = parseInt(quantityInput.value); // Retrieve the quantity from the input field
+
+    if (!product) {
+        console.error('Product not found:', productIndex);
+        alert('Product data is unavailable. Please try again later.');
+        return;
+    }
+
+    // Validate the quantity
+    if (isNaN(quantity) || quantity < 1 || quantity > product.stock) {
+        alert(`Please enter a valid quantity (1 to ${product.stock}).`);
+        return;
+    }
+
+    let cartItem = cart.find(item => item.product.name === product.name);
+
+    if (cartItem) {
+        // Check if adding the new quantity exceeds the stock
+        if (cartItem.quantity + quantity > product.stock) {
+            alert(`Cannot add more than ${product.stock} units of ${product.name} to the cart.`);
+            return;
+        }
+        cartItem.quantity += quantity; // Increment the quantity
+    } else {
+        if (product.stock < quantity) {
+            alert(`Not enough stock available for ${product.name}.`);
+            return;
+        }
+        cart.push({ product, quantity }); // Add new item with the specified quantity
+    }
+
+    // Update cart list display
+    const cartList = document.getElementById("cart-items");
+    cartList.innerHTML = cart.map(item => `<li>${item.quantity}x ${item.product.name}</li>`).join('');
+
+    // Optionally log the updated cart for debugging
+    console.log('Cart updated:', cart);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          async function preorderProduct(productIndex) {
+                                                              const product = products[productIndex];
+                                                              const quantity = parseInt(document.getElementById(`quantity-${productIndex}`).value);
+                                                              if (!product) {
+                                                                  alert('Product data is unavailable. Please try again later.');
+                                                                  return;
+                                                              }
+
+
+
+
+
+
+
+
+                                                              // Send preorder request to backend
+                                                              try {
+                                                                  const response = await fetch('/api/preorder', {
+                                                                      method: 'POST',
+                                                                      headers: { 'Content-Type': 'application/json' },
+                                                                      body: JSON.stringify({ email: userEmail, productName: product.name, quantity })
+                                                                  });
+
+
+
+
+
+
+
+
+                                                                  const result = await response.json();
+                                                                  if (response.ok) {
+                                                                      alert(`You have preordered ${quantity} of ${product.name}. We will notify you when it is back in stock.`);
+                                                                  } else {
+                                                                      alert(result.message || 'Failed to place preorder. Please try again later.');
+                                                                  }
+                                                              } catch (error) {
+                                                                  console.error('Error preordering product:', error);
+                                                                  alert('An error occurred while placing the preorder. Please try again later.');
+                                                              }
+                                                          }
+
+
+
+
+
+
+
+
+                                  async function submitOrder() {
+                                      let totalCost = 0;
+                                      cart.forEach(item => {
+                                          totalCost += item.product.price * item.quantity;
+                                      });
+
+
+
+
+
+
+
+
+                                      if (totalCost > userCoins) {
+                                          alert("You do not have enough coins to complete this order.");
+                                      } else {
+                                          // Prepare order data
+                                          const orderData = {
+                                              userEmail,
+                                              cart,
+                                              totalCost
+                                          };
+                                          clearCart();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              try {
+                                  // Send the order request to the backend
+                                  const response = await fetch('http://localhost:3000/order-request', {
+                                      method: 'POST',
+                                      headers: {
+                                          'Content-Type': 'application/json'
+                                      },
+                                      body: JSON.stringify(orderData)
+                                  });
+
+
+
+
+
+
+
+
+                                  if (!response.ok) {
+                                      throw new Error(`Order request failed: ${response.statusText}`);
+                                  }
+
+
+
+
+
+
+
+
+                                  // Handle successful response
+                                  const responseData = await response.json();
+                                  console.log('Order request succeeded:', responseData);
+
+
+
+
+
+
+
+
+                              } catch (error) {
+                                  // Catch any errors that occur during the fetch or processing
+                                  console.error('Error occurred while sending the order request:', error);
+                              }
+                                      }
+                                  }
+
+
+
+
+
+
+
+
+                                                              function removeFromCart(productIndex) {
+                                                                  const product = products[productIndex];
+                                                                  cart = cart.filter(item => item.product.name !== product.name);
+
+
+
+
+
+
+
+
+                                                              }
+
+
+
+
+
+
+
+
+                                                            async function updateDashboard() {
+                                                              document.getElementById("user-coins").innerText = userCoins;
+                                                              const cartList = document.getElementById("cart-items");
+                                                              cartList.innerHTML = cart.map(item => `<li>${item.quantity}x ${item.product.name}</li>`).join('');
+
+
+
+
+
+
+
+
+                                                              // Loop through the products and update their stock both on the frontend and backend
+                                                              for (let index = 0; index < products.length; index++) {
+                                                                  const product = products[index];
+                                                                  document.getElementById(`stock-${index}`).innerText = `Stock: ${product.stock}`;
+
+
+
+
+
+
+
+
+                                                                  // Check if the preorder button should be visible
+                                                                  const preorderButton = document.getElementById(`preorder-${index}`);
+                                                                  if (product.stock === 0) {
+                                                                      preorderButton.classList.remove("hidden");
+                                                                  } else {
+                                                                      preorderButton.classList.add("hidden");
+                                                                  }
+
+
+
+
+
+
+
+
+                                                                  // Send the updated stock value to the backend after any update (e.g., after adding to cart or completing a purchase)
+                                                                  try {
+                                                                      const response = await fetch('/api/update-stock', {
+                                                                  method: 'POST',
+                                                                  headers: { 'Content-Type': 'application/json' },
+                                                                  body: JSON.stringify({
+                                                                      productName: product.name,
+                                                                      newStock: product.stock,
+                                                                      username: userEmail  // Add the username here
+                                                                  })
+                                                                      });
+
+
+
+
+
+
+
+
+                                                                      if (!response.ok) {
+                                                                          throw new Error(`Failed to update stock for ${product.name}: ${response.statusText}`);
+                                                                      }
+
+
+
+
+
+
+
+
+                                                                      console.log(`Stock for ${product.name} successfully updated on the backend.`);
+                                                                  } catch (error) {
+                                                                      console.error('Error updating stock on backend:', error);
+                                                                  }
+                                                              }
+
+
+
+
+
+
+
+
+                                                              // Update the transaction history display
+                                                              const transactionList = document.getElementById("transaction-history");
+                                                              transactionList.innerHTML = transactionHistory.map(transaction => `<li>${transaction}</li>`).join('');
+                                                          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                              function manageUsers() {
+                                                                  alert("Redirecting to user management...");
+                                                              }
+
+
+
+
+
+
+
+
+                                                              function logout() {
+                                                                  alert("Logging out...");
+                                                                  location.reload();
+                                                              }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
