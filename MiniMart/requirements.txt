@@ -1,4 +1,0 @@
-//cd to this directory
-npm install node
-npm install @sendgrid/mail
-//npm start to start server
