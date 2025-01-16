@@ -1,5 +1,0 @@
-//cd to this directory
-npm install node
-npm install @sendgrid/mail
-npm install express nodemailer body-parser cors 
-npm start 
