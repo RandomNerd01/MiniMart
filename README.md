@@ -1,5 +1,5 @@
 # MiniMart
-Minimart System Designed for a Hackathon 'Hack For Good 2025'. Download at https://drive.google.com/drive/folders/1EKo29hJac2jAL01W_2jx3cwZhsaTZvFf
+Minimart System Designed for a Hackathon 'Hack For Good 2025'. 
 
 
 Admins have a password known only to admins. Currently its '123'
