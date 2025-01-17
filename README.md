@@ -7,7 +7,7 @@ Admins have a password known only to admins. Currently its '123'
 
 
 ## Process
-  1) Click 'code' button on top right and click 'Download Zip File'
+  1) Download Minimart Folder at https://drive.google.com/drive/folders/1EKo29hJac2jAL01W_2jx3cwZhsaTZvFf
   2) Extract Zip File
   3) Navigate to Folder that was Extracted.
   4) Open up command terminal(cmd in windows search)
